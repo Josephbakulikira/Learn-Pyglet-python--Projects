@@ -75,9 +75,10 @@ def CheckLeftPaddle():
        Ball.y + Ball.radius > leftPaddle.y - leftPaddle.height//2 and
        Ball.x - Ball.radius < leftPaddle.x + leftPaddle.width) :
        if Ball.x > leftPaddle.x:
-           hitSound.play()
            diff = Ball.y - (leftPaddle.y - leftPaddle.height//2)
+           # map the range 0->height to -45 -> 45
            angle = translateValue(diff, 0, leftPaddle.height, -val, val)
+           # using the polar cordinnate
            Ball.velocity[0] = 10 * math.cos(angle)
            Ball.velocity[1] = 10 * math.sin(angle)
            Ball.x = leftPaddle.x + leftPaddle.width + Ball.radius
@@ -87,9 +88,10 @@ def CheckRightPaddle():
        Ball.y + Ball.radius > rightPaddle.y - rightPaddle.height//2 and
        Ball.x + Ball.radius > rightPaddle.x - rightPaddle.width):
        if Ball.x < rightPaddle.x:
-           hitSound.play()
            diff = Ball.y - (rightPaddle.y - rightPaddle.height//2)
+           # map the range 0->height to 225 to 135
            angle = translateValue(diff, 0, rightPaddle.height, math.radians(225), math.radians(135))
+           # using the polar cordinnate
            Ball.velocity[0] = 10 * math.cos(angle)
            Ball.velocity[1] = 10 * math.sin(angle)
            Ball.x = rightPaddle.x - rightPaddle.width - Ball.radius
@@ -97,16 +99,20 @@ def CheckRightPaddle():
 # check if the ball is out of bound
 def Boundary():
     if Ball.y < Ball.radius or Ball.y > height-(Ball.radius):
+        # reflect the velocity vector of the ball
         Ball.velocity[1] *= -1
 
     if Ball.x  > width - (Ball.radius//2):
         #print(f"here right: {Ball.x}")
         leftScore.text = str(int(leftScore.text)+1)
+        hitSound.play()
+
         reset()
 
     if Ball.x < Ball.radius:
         #print(f"here left: {Ball.x}")
         rightScore.text = str(int(rightScore.text)+1)
+        hitSound.play()
         reset()
 
 def reset():
