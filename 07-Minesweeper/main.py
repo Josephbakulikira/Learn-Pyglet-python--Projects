@@ -11,6 +11,7 @@ window = pyglet.window.Window(width, height)
 cell_size = 50
 rows = height//cell_size
 columns = width//cell_size
+game_state = False
 
 minefield = 20
 options = []
@@ -48,11 +49,13 @@ for x in range(rows):
         Grid[x][y].countMines(Grid)
 
 def Update(_dt):
+
     index_x, index_y = m.x//cell_size, m.y//cell_size
     if Grid[index_x][index_y] and m.left == True:
         Grid[index_x][index_y].activate(index_x, index_y, Grid)
     elif Grid[index_x][index_y] and m.right == True:
         Grid[index_x][index_y].activate(index_x, index_y, Grid,"RIGHT")
+
 
     for x in range(rows):
         for y in range(columns):

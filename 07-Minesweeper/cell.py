@@ -48,7 +48,6 @@ class Cell(pyglet.shapes.Rectangle):
     def isFillable(x, y, grid):
         if x >= 0 and y >= 0 and x < len(grid) and y < len(grid[0]):
             if grid[x][y].isActive != True and grid[x][y].isMine == False:
-                print("here2")
                 return True
             else:
                 return False
@@ -59,9 +58,16 @@ class Cell(pyglet.shapes.Rectangle):
             self.isFlagged = not self.isFlagged
         else:
             if self.count == 0:
-                print("here1")
                 Cell.floodFill(x, y, grid)
+            elif self.isMine == True:
+                for i in range(len(grid)):
+                    for j in range(len(grid[0])):
+                        if grid[i][j].isFlagged == True and grid[i][j].isMine == True:
+                            pass
+                        else:
+                            grid[i][j].isActive = True
             self.isActive = True
+
 
 
 
