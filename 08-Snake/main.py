@@ -128,6 +128,5 @@ def on_draw():
         gameisOverText.draw()
 
 
-
 clock.schedule_interval(update, 1/10.)
 pyglet.app.run()

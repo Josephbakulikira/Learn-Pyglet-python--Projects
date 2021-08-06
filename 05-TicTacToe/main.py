@@ -30,10 +30,21 @@ Winner = pyglet.text.Label(
 x=width//2,
 y=height-50,
 anchor_x='center', anchor_y='center',
-font_size=35,
+font_size=25,
 font_name="Verdana",
 color=green
 )
+
+Status = pyglet.text.Label(
+"Press 'Space' or 'Return' key to restart",
+x=width//2,
+y=20,
+anchor_x='center', anchor_y='center',
+font_size=13,
+font_name="Verdana"
+)
+Status.color = (142,200, 23, 255)
+
 
 Board = [[None for _ in range(3)] for i in range(3)]
 Cells = []
@@ -83,7 +94,7 @@ def CheckWin():
         Board[1][1].color = green
         Board[2][2].color = green
 
-        Winner.text = turn.text + " is the winner !"
+        Winner.text = turn.text + " is the winner !  Press 'SPACE' to restart"
         return
     if Board[0][2].text == Board[1][1].text == Board[2][0].text and Board[0][2].text != "":
         Board[0][2].color = green
@@ -100,9 +111,9 @@ def Restart():
     Winner.text = ""
 
 @window.event
-def on_key_press(symbol, modifier):
+def on_key_press(symbol, modifiers):
     # press space to Restart
-    if symbol == key.SPACE:
+    if symbol == key.SPACE or symbol == key.ENTER:
         Restart()
         turn.text = "X"
 
@@ -129,4 +140,5 @@ def on_draw():
             Board[x][y].draw()
     Winner.draw()
     turn.draw()
+    Status.draw()
 pyglet.app.run()
